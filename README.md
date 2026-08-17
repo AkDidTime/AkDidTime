@@ -120,6 +120,42 @@ Investigating Windows security events to understand:
 * Account activity
 * Indicators of potential compromise
 
+
+### 🔎 Sysmon Process Investigation
+
+Performed a hands-on investigation using **Sysmon** and Windows Event Viewer to analyse process creation telemetry.
+
+The investigation focused on:
+
+* Analysing Sysmon Event ID 1 (Process Create)
+* Examining process command lines
+* Identifying parent and child processes
+* Reconstructing a process tree
+* Investigating PowerShell and `conhost.exe` activity
+* Reviewing process hashes and integrity levels
+* Determining whether observed activity appeared suspicious or legitimate
+* Documenting investigation findings
+
+**Key finding:**
+
+```
+explorer.exe
+    |
+    └── powershell.exe
+            |
+            └── conhost.exe
+```
+
+The observed PowerShell execution was consistent with legitimate interactive activity. The process tree showed `explorer.exe` launching PowerShell, which in turn spawned `conhost.exe`. No suspicious command line, unusual parent process, or other indicators of compromise were identified during this investigation. The investigation demonstrated how process relationships and endpoint telemetry can be used to establish context around security events.
+
+**Tools used:**
+
+* Sysmon
+* Windows Event Viewer
+* PowerShell
+* Windows Event Logs
+
+
 ### 🚧 Brute Force Detection
 
 Building a detection and investigation workflow for repeated authentication failures.
